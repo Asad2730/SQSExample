@@ -8,12 +8,12 @@ import (
 	"github.com/aws/aws-sdk-go-v2/service/sqs"
 )
 
-func CreateQueue(name string) (string, error) {
+func CreateQueue(name string) error {
 
 	cfg, err := config.LoadDefaultConfig(context.TODO())
 
 	if err != nil {
-		return "", err
+		return err
 	}
 
 	svc := sqs.NewFromConfig(cfg)
@@ -22,13 +22,13 @@ func CreateQueue(name string) (string, error) {
 		QueueName: aws.String(name),
 	}
 
-	result, err := svc.CreateQueue(context.TODO(), input)
+	_, err = svc.CreateQueue(context.TODO(), input)
 
 	if err != nil {
-		return "", err
+		return err
 	}
 
-	return *result.QueueUrl, nil
+	return nil
 }
 
 func ListQueues() ([]string, error) {

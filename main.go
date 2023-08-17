@@ -8,7 +8,13 @@ import (
 
 func main() {
 
-	queName := ""
+	queName := "MY_Queue"
+
+	err := controlers.CreateQueue(queName)
+
+	if err != nil {
+		panic(err.Error())
+	}
 
 	queUrl, err := controlers.GetQueueURL(queName)
 
